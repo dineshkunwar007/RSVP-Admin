@@ -176,7 +176,7 @@
       </div>
     </div>
     <ProductsList
-      :productList="productList"
+      :productList="eventList"
       v-else-if="mode == 'Display'"
       @addNewProduct="onAddProduct"
       @updateProduct="onUpdateProduct"
@@ -196,7 +196,7 @@ import {
   getDownloadURL,
 } from "../data/firebase";
 
-import { addDoc, doc, updateDoc } from "firebase/firestore";
+import { addDoc, doc, updateDoc, onSnapshot } from "firebase/firestore";
 export default {
   data: () => ({
     caption: "",
@@ -217,7 +217,7 @@ export default {
       isActive: "yes",
     },
     EventTypes: ["Current", "Upcoming"],
-    productList: [],
+    eventList: [],
   }),
   components: {
     //FontAwesomeIcon,
@@ -357,13 +357,14 @@ export default {
     //   });
     // });
     // // get all products
-    // const productsRef = collection(db, "Products");
-    // onSnapshot(productsRef, (snapshot) => {
-    //   this.productList = [];
-    //   snapshot.docs.forEach((doc) => {
-    //     this.productList.push({ ...doc.data(), id: doc.id });
-    //   });
-    // });
+    debugger;
+    const productsRef = collection(db, "RSVPEvents");
+    onSnapshot(productsRef, (snapshot) => {
+      this.eventList = [];
+      snapshot.docs.forEach((doc) => {
+        this.eventList.push({ ...doc.data(), id: doc.id });
+      });
+    });
   },
 };
 </script>
