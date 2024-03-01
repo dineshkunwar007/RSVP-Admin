@@ -38,12 +38,12 @@
             <td>{{ event.contactPerson }}</td>
             <td>Active</td>
             <td>
-              <button class="btn btn-sm" @click="UpdateProduct(product)">
+              <button class="btn btn-sm" @click="UpdateProduct(event)">
                 <i class="fa fa-times"
                   ><font-awesome-icon icon="fa-solid fa-pen-to-square"
                 /></i>
               </button>
-              <button class="btn btn-sm" @click="DeleteProduct(product.id)">
+              <button class="btn btn-sm" @click="DeleteProduct(event.id)">
                 <i class="fa fa-times"
                   ><font-awesome-icon icon="fa-solid fa-trash"
                 /></i>
@@ -76,12 +76,12 @@ export default {
     addNew() {
       this.$emit("addNewProduct");
     },
-    UpdateProduct(product) {
-      this.$emit("updateProduct", product);
+    UpdateProduct(event) {
+      this.$emit("updateEvent", event);
     },
-    DeleteProduct(ProductID) {
+    DeleteProduct(EventId) {
       debugger;
-      const docref = doc(db, "Products", ProductID);
+      const docref = doc(db, "RSVPEvents", EventId);
       deleteDoc(docref).then(() => {
         console.log("Product delete successfuly");
       });

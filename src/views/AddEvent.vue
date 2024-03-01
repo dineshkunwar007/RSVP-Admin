@@ -179,7 +179,7 @@
       :productList="eventList"
       v-else-if="mode == 'Display'"
       @addNewProduct="onAddProduct"
-      @updateProduct="onUpdateProduct"
+      @updateEvent="onUpdateEvent"
     />
   </div>
 </template>
@@ -255,19 +255,18 @@ export default {
             this.mode = "Display";
           });
         } else {
-          const docref = doc(db, "Products", this.product.id);
-          updateDoc(docref, this.product).then(() => {
-            this.product = {
-              productName: "",
-              productDetail: "",
-              productImg: "",
-              productCategory: "",
-              purchagePrice: 0,
-              margin: 0,
-              salePrice: 0,
-              productQuantity: 0,
-              reduction: 0,
-              reducedPrice: 0,
+          const docref = doc(db, "RSVPEvents", this.Event.id);
+          updateDoc(docref, this.Event).then(() => {
+            this.Event = {
+              eventTitle: "",
+              eventSummary: "",
+              eventImg: "",
+              eventStatus: "",
+              totalseat: 0,
+              contactPerson: "",
+              contactPhone: "",
+              eventLocation: "",
+
               isActive: "yes",
               id: null,
             };
@@ -277,14 +276,14 @@ export default {
         }
       }
     },
-    onUpdateProduct(product) {
+    onUpdateEvent(Event) {
+      debugger;
       this.mode = "Add";
       this.addMode = false;
-      this.product = product;
+      this.Event = Event;
     },
 
     previewImage(event) {
-      debugger;
       this.uploadValue = 0;
       this.productImage = null;
       this.imageData = event.target.files[0];
@@ -357,7 +356,7 @@ export default {
     //   });
     // });
     // // get all products
-    debugger;
+
     const productsRef = collection(db, "RSVPEvents");
     onSnapshot(productsRef, (snapshot) => {
       this.eventList = [];
